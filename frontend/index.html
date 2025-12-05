@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Build Number (TW)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex">
+
+  <!-- ───────────────────────────── 모달 팝업 ───────────────────────────── -->
+  <div id="popup-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+  <div id="popup-box"
+       class="fixed bg-white rounded-xl shadow-xl p-8 w-[420px] hidden z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div id="popup-message" class="text-red-600 font-bold text-lg mb-6 text-center">
+      메시지
+    </div>
+    <div class="flex justify-center space-x-6">
+      <button id="popup-cancel" class="px-6 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">취소</button>
+      <button id="popup-confirm" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">확인</button>
+    </div>
+  </div>
+
+  <!-- ───────────────────────────── 사이드바 ───────────────────────────── -->
+  <aside class="w-64 bg-gray-900 text-white flex flex-col">
+    <div class="p-6 text-2xl font-bold border-b border-gray-700">
+      Build Number (TW)
+    </div>
+
+    <nav class="flex-1 p-4 space-y-3 text-lg">
+      <button id="btn-total"
+              onclick="showPage('total')"
+              class="block w-full text-left px-3 py-2 rounded bg-gray-800 hover:bg-gray-700">
+        Total
+      </button>
+      <button id="btn-livehotfix"
+              onclick="showPage('livehotfix')"
+              class="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">
+        LiveHotfixTW Stream
+      </button>
+      <button id="btn-stage"
+              onclick="showPage('stage')"
+              class="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">
+        StageTW Stream
+      </button>
+      <button id="btn-l10n"
+              onclick="showPage('l10n')"
+              class="block w-full text-left px-3 py-2 rounded hover:bg-gray-800">
+        L10NTW Stream
+      </button>
+    </nav>
+  </aside>
+
+  <!-- ───────────────────────────── 메인 ───────────────────────────── -->
+  <main class="flex-1 p-8 overflow-y-auto">
+
+    <!-- ========== TOTAL PAGE ========== -->
+    <section id="page-total" class="page-section">
+      <h1 class="text-3xl font-bold mb-6">Total Build Status</h1>
+
+      <!-- Stream 최신 2개 -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-10">
+        <!-- LiveHotfixTW Stream -->
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h2 class="text-xl font-semibold mb-4">LiveHotfixTW Stream 최신 빌드</h2>
+          <div class="space-y-1 text-sm">
+            <p><b>Stream:</b> <span id="total-stream-livehotfix-stream">-</span></p>
+            <p><b>Build:</b> <span id="total-stream-livehotfix-build">-</span></p>
+            <p><b>BuildType:</b> <span id="total-stream-livehotfix-buildtype">-</span></p>
+            <p><b>Version:</b> <span id="total-stream-livehotfix-version">-</span></p>
+            <p><b>AOS VersionCode:</b> <span id="total-stream-livehotfix-aos">-</span></p>
+            <p><b>iOS VersionCode:</b> <span id="total-stream-livehotfix-ios">-</span></p>
+            <p><b>cv:</b> <span id="total-stream-livehotfix-cv">-</span></p>
+            <p><b>Date:</b> <span id="total-stream-livehotfix-date">-</span></p>
+          </div>
+        </div>
+
+        <!-- StageTW Stream -->
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h2 class="text-xl font-semibold mb-4">StageTW Stream 최신 빌드</h2>
+          <div class="space-y-1 text-sm">
+            <p><b>Stream:</b> <span id="total-stream-stage-stream">-</span></p>
+            <p><b>Build:</b> <span id="total-stream-stage-build">-</span></p>
+            <p><b>BuildType:</b> <span id="total-stream-stage-buildtype">-</span></p>
+            <p><b>Version:</b> <span id="total-stream-stage-version">-</span></p>
+            <p><b>AOS VersionCode:</b> <span id="total-stream-stage-aos">-</span></p>
+            <p><b>iOS VersionCode:</b> <span id="total-stream-stage-ios">-</span></p>
+            <p><b>cv:</b> <span id="total-stream-stage-cv">-</span></p>
+            <p><b>Date:</b> <span id="total-stream-stage-date">-</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Build 종류별 최신 3개 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- LiveTW Build -->
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h2 class="text-xl font-semibold mb-4">LiveTW Build 최신 빌드</h2>
+          <div class="space-y-1 text-sm">
+            <p><b>Build:</b> <span id="total-build-livetw-build">-</span></p>
+            <p><b>BuildType:</b> <span id="total-build-livetw-buildtype">-</span></p>
+            <p><b>Stream:</b> <span id="total-build-livetw-stream">-</span></p>
+            <p><b>Version:</b> <span id="total-build-livetw-version">-</span></p>
+            <p><b>AOS VersionCode:</b> <span id="total-build-livetw-aos">-</span></p>
+            <p><b>iOS VersionCode:</b> <span id="total-build-livetw-ios">-</span></p>
+            <p><b>cv:</b> <span id="total-build-livetw-cv">-</span></p>
+            <p><b>Date:</b> <span id="total-build-livetw-date">-</span></p>
+          </div>
+        </div>
+
+        <!-- StageTW Build -->
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h2 class="text-xl font-semibold mb-4">StageTW Build 최신 빌드</h2>
+          <div class="space-y-1 text-sm">
+            <p><b>Build:</b> <span id="total-build-stagetw-build">-</span></p>
+            <p><b>BuildType:</b> <span id="total-build-stagetw-buildtype">-</span></p>
+            <p><b>Stream:</b> <span id="total-build-stagetw-stream">-</span></p>
+            <p><b>Version:</b> <span id="total-build-stagetw-version">-</span></p>
+            <p><b>AOS VersionCode:</b> <span id="total-build-stagetw-aos">-</span></p>
+            <p><b>iOS VersionCode:</b> <span id="total-build-stagetw-ios">-</span></p>
+            <p><b>cv:</b> <span id="total-build-stagetw-cv">-</span></p>
+            <p><b>Date:</b> <span id="total-build-stagetw-date">-</span></p>
+          </div>
+        </div>
+
+        <!-- L10NTW Build -->
+        <div class="bg-white p-6 rounded-xl shadow-md">
+          <h2 class="text-xl font-semibold mb-4">L10NTW Build 최신 빌드</h2>
+          <div class="space-y-1 text-sm">
+            <p><b>Build:</b> <span id="total-build-l10ntw-build">-</span></p>
+            <p><b>BuildType:</b> <span id="total-build-l10ntw-buildtype">-</span></p>
+            <p><b>Stream:</b> <span id="total-build-l10ntw-stream">-</span></p>
+            <p><b>Version:</b> <span id="total-build-l10ntw-version">-</span></p>
+            <p><b>AOS VersionCode:</b> <span id="total-build-l10ntw-aos">-</span></p>
+            <p><b>iOS VersionCode:</b> <span id="total-build-l10ntw-ios">-</span></p>
+            <p><b>cv:</b> <span id="total-build-l10ntw-cv">-</span></p>
+            <p><b>Date:</b> <span id="total-build-l10ntw-date">-</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== LiveHotfixTW Stream PAGE ========== -->
+    <section id="page-livehotfix" class="page-section hidden">
+      <h1 class="text-3xl font-bold mb-6">LiveHotfixTW Stream - Build History</h1>
+
+      <!-- 최신 빌드 -->
+      <div class="bg-yellow-100 p-6 rounded-xl shadow-md max-w-2xl mb-8">
+        <h2 class="text-xl font-semibold mb-4">최신 빌드 정보</h2>
+        <p><b>Stream:</b> LiveHotfixTW</p>
+        <p><b>Build:</b> <span id="livehotfix-latest-build">-</span></p>
+        <p><b>BuildType:</b> <span id="livehotfix-latest-buildtype">-</span></p>
+        <p><b>Version:</b> <span id="livehotfix-latest-version">-</span></p>
+        <p><b>AOS:</b> <span id="livehotfix-latest-aos">-</span></p>
+        <p><b>iOS:</b> <span id="livehotfix-latest-ios">-</span></p>
+        <p><b>cv:</b> <span id="livehotfix-latest-cv">-</span></p>
+        <p><b>Date:</b> <span id="livehotfix-latest-date">-</span></p>
+      </div>
+
+      <!-- 등록 -->
+      <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
+        <h2 class="text-xl font-semibold mb-4">빌드 정보 등록</h2>
+        <div class="grid grid-cols-6 gap-4">
+          <div>
+            <label class="font-semibold text-sm">Build</label>
+            <select id="livehotfix-input-build" class="p-2 border rounded w-full text-sm">
+              <option value="LiveTW">LiveTW</option>
+              <option value="StageTW">StageTW</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-semibold text-sm">BuildType</label>
+            <select id="livehotfix-input-buildtype" class="p-2 border rounded w-full text-sm">
+              <option value="Full Build">Full Build</option>
+              <option value="DataOnly">DataOnly</option>
+              <option value="DLC">DLC</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-semibold text-sm">Version</label>
+            <input id="livehotfix-input-version" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">AOS</label>
+            <input id="livehotfix-input-aos" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">iOS</label>
+            <input id="livehotfix-input-ios" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">cv</label>
+            <input id="livehotfix-input-cv" class="p-2 border rounded w-full text-sm" />
+          </div>
+        </div>
+        <button onclick="attemptRegisterStream('LiveHotfixTW', 'livehotfix')"
+                class="mt-5 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+          빌드 등록
+        </button>
+      </div>
+
+      <!-- 히스토리 -->
+      <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl">
+        <h2 class="text-xl font-semibold mb-4">Build History</h2>
+        <table class="w-full border-collapse text-sm">
+          <thead>
+          <tr class="bg-gray-100 border-b">
+            <th class="p-2 text-left">Date</th>
+            <th class="p-2 text-left">Build</th>
+            <th class="p-2 text-left">Type</th>
+            <th class="p-2 text-left">Version</th>
+            <th class="p-2 text-left">AOS</th>
+            <th class="p-2 text-left">iOS</th>
+            <th class="p-2 text-left">cv</th>
+            <th class="p-2 text-left">Action</th>
+          </tr>
+          </thead>
+          <tbody id="livehotfix-history"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== StageTW Stream PAGE ========== -->
+    <section id="page-stage" class="page-section hidden">
+      <h1 class="text-3xl font-bold mb-6">StageTW Stream - Build History</h1>
+
+      <!-- 최신 -->
+      <div class="bg-yellow-100 p-6 rounded-xl shadow-md max-w-2xl mb-8">
+        <h2 class="text-xl font-semibold mb-4">최신 빌드 정보</h2>
+        <p><b>Stream:</b> StageTW</p>
+        <p><b>Build:</b> <span id="stage-latest-build">-</span></p>
+        <p><b>BuildType:</b> <span id="stage-latest-buildtype">-</span></p>
+        <p><b>Version:</b> <span id="stage-latest-version">-</span></p>
+        <p><b>AOS:</b> <span id="stage-latest-aos">-</span></p>
+        <p><b>iOS:</b> <span id="stage-latest-ios">-</span></p>
+        <p><b>cv:</b> <span id="stage-latest-cv">-</span></p>
+        <p><b>Date:</b> <span id="stage-latest-date">-</span></p>
+      </div>
+
+      <!-- 등록 -->
+      <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
+        <h2 class="text-xl font-semibold mb-4">빌드 정보 등록</h2>
+        <div class="grid grid-cols-6 gap-4">
+          <div>
+            <label class="font-semibold text-sm">Build</label>
+            <select id="stage-input-build" class="p-2 border rounded w-full text-sm">
+              <option value="LiveTW">LiveTW</option>
+              <option value="StageTW">StageTW</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-semibold text-sm">BuildType</label>
+            <select id="stage-input-buildtype" class="p-2 border rounded w-full text-sm">
+              <option value="Full Build">Full Build</option>
+              <option value="DataOnly">DataOnly</option>
+              <option value="DLC">DLC</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-semibold text-sm">Version</label>
+            <input id="stage-input-version" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">AOS</label>
+            <input id="stage-input-aos" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">iOS</label>
+            <input id="stage-input-ios" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">cv</label>
+            <input id="stage-input-cv" class="p-2 border rounded w-full text-sm" />
+          </div>
+        </div>
+        <button onclick="attemptRegisterStream('StageTW', 'stage')"
+                class="mt-5 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+          빌드 등록
+        </button>
+      </div>
+
+      <!-- 히스토리 -->
+      <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl">
+        <h2 class="text-xl font-semibold mb-4">Build History</h2>
+        <table class="w-full border-collapse text-sm">
+          <thead>
+          <tr class="bg-gray-100 border-b">
+            <th class="p-2 text-left">Date</th>
+            <th class="p-2 text-left">Build</th>
+            <th class="p-2 text-left">Type</th>
+            <th class="p-2 text-left">Version</th>
+            <th class="p-2 text-left">AOS</th>
+            <th class="p-2 text-left">iOS</th>
+            <th class="p-2 text-left">cv</th>
+            <th class="p-2 text-left">Action</th>
+          </tr>
+          </thead>
+          <tbody id="stage-history"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== L10NTW Stream PAGE ========== -->
+    <section id="page-l10n" class="page-section hidden">
+      <h1 class="text-3xl font-bold mb-6">L10NTW Stream - Build History</h1>
+
+      <!-- 최신 -->
+      <div class="bg-yellow-100 p-6 rounded-xl shadow-md max-w-2xl mb-8">
+        <h2 class="text-xl font-semibold mb-4">최신 빌드 정보</h2>
+        <p><b>Stream:</b> L10NTW</p>
+        <p><b>Build:</b> <span id="l10n-latest-build">-</span></p>
+        <p><b>BuildType:</b> <span id="l10n-latest-buildtype">-</span></p>
+        <p><b>Version:</b> <span id="l10n-latest-version">-</span></p>
+        <p><b>AOS:</b> <span id="l10n-latest-aos">-</span></p>
+        <p><b>iOS:</b> <span id="l10n-latest-ios">-</span></p>
+        <p><b>cv:</b> <span id="l10n-latest-cv">-</span></p>
+        <p><b>Date:</b> <span id="l10n-latest-date">-</span></p>
+      </div>
+
+      <!-- 등록 (Build 고정: L10NTW) -->
+      <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
+        <h2 class="text-xl font-semibold mb-4">빌드 정보 등록</h2>
+        <div class="grid grid-cols-5 gap-4">
+          <div>
+            <label class="font-semibold text-sm">Build</label>
+            <input class="p-2 border rounded w-full text-sm bg-gray-100" value="L10NTW" disabled />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">BuildType</label>
+            <select id="l10n-input-buildtype" class="p-2 border rounded w-full text-sm">
+              <option value="Full Build">Full Build</option>
+              <option value="DataOnly">DataOnly</option>
+              <option value="DLC">DLC</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-semibold text-sm">Version</label>
+            <input id="l10n-input-version" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">AOS</label>
+            <input id="l10n-input-aos" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">iOS</label>
+            <input id="l10n-input-ios" class="p-2 border rounded w-full text-sm" />
+          </div>
+        </div>
+        <div class="grid grid-cols-1 mt-4">
+          <div>
+            <label class="font-semibold text-sm">cv</label>
+            <input id="l10n-input-cv" class="p-2 border rounded w-full text-sm" />
+          </div>
+        </div>
+
+        <button onclick="attemptRegisterStream('L10NTW', 'l10n', true)"
+                class="mt-5 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
+          빌드 등록
+        </button>
+      </div>
+
+      <!-- 히스토리 -->
+      <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl">
+        <h2 class="text-xl font-semibold mb-4">Build History</h2>
+        <table class="w-full border-collapse text-sm">
+          <thead>
+          <tr class="bg-gray-100 border-b">
+            <th class="p-2 text-left">Date</th>
+            <th class="p-2 text-left">Build</th>
+            <th class="p-2 text-left">Type</th>
+            <th class="p-2 text-left">Version</th>
+            <th class="p-2 text-left">AOS</th>
+            <th class="p-2 text-left">iOS</th>
+            <th class="p-2 text-left">cv</th>
+            <th class="p-2 text-left">Action</th>
+          </tr>
+          </thead>
+          <tbody id="l10n-history"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+<script>
+const API_BASE = "";
+
+let pendingRegister = null;
+let pendingDelete   = null;
+
+/* ───────── 공통 API ───────── */
+// ★ 변경: 에러 시 콘솔 로깅 + 호출자에게 null 반환
+async function api(path, method="GET", body=null) {
+  try {
+    const res = await fetch(`${API_BASE}${path}`, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: body ? JSON.stringify(body) : null,
+    });
+
+    if (!res.ok) {
+      console.error(`API Error: ${method} ${path} -> ${res.status}`);
+      return null;
+    }
+    return await res.json();
+  } catch (err) {
+    console.error(`API Exception: ${method} ${path}`, err);
+    return null;
+  }
+}
+
+/* ───────── 페이지 전환 ───────── */
+function showPage(pageKey) {
+  document.querySelectorAll(".page-section").forEach(s => s.classList.add("hidden"));
+  document.getElementById(`page-${pageKey}`).classList.remove("hidden");
+
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("bg-gray-800"));
+  document.getElementById(`btn-${pageKey}`).classList.add("bg-gray-800");
+
+  reloadAll();  // 페이지 전환 시 전체 갱신
+}
+
+/* ───────── TOTAL 로딩 ───────── */
+async function loadTotal() {
+  const liveStream  = await api("/latest/stream/LiveHotfixTW");
+  const stageStream = await api("/latest/stream/StageTW");
+
+  setTotalStreamCard("livehotfix", liveStream);
+  setTotalStreamCard("stage",      stageStream);
+
+  const liveBuild  = await api("/latest/build/LiveTW");
+  const stageBuild = await api("/latest/build/StageTW");
+  const l10nBuild  = await api("/latest/build/L10NTW");
+
+  setTotalBuildCard("livetw",  liveBuild);
+  setTotalBuildCard("stagetw", stageBuild);
+  setTotalBuildCard("l10ntw",  l10nBuild);
+}
+
+function onlyDate(dt) {
+  if (!dt) return "-";
+  return dt.split("T")[0];
+}
+
+function setTotalStreamCard(key, data) {
+  document.getElementById(`total-stream-${key}-stream`).innerText    = data?.stream ?? "-";
+  document.getElementById(`total-stream-${key}-build`).innerText     = data?.build ?? "-";
+  document.getElementById(`total-stream-${key}-buildtype`).innerText = data?.build_type ?? "-";
+  document.getElementById(`total-stream-${key}-version`).innerText   = data?.version ?? "-";
+  document.getElementById(`total-stream-${key}-aos`).innerText       = data?.aos_version ?? "-";
+  document.getElementById(`total-stream-${key}-ios`).innerText       = data?.ios_version ?? "-";
+  document.getElementById(`total-stream-${key}-cv`).innerText        = data?.cv ?? "-";
+  document.getElementById(`total-stream-${key}-date`).innerText      = onlyDate(data?.created_at);
+}
+
+function setTotalBuildCard(key, data) {
+  document.getElementById(`total-build-${key}-build`).innerText     = data?.build ?? "-";
+  document.getElementById(`total-build-${key}-buildtype`).innerText = data?.build_type ?? "-";
+  document.getElementById(`total-build-${key}-stream`).innerText    = data?.stream ?? "-";
+  document.getElementById(`total-build-${key}-version`).innerText   = data?.version ?? "-";
+  document.getElementById(`total-build-${key}-aos`).innerText       = data?.aos_version ?? "-";
+  document.getElementById(`total-build-${key}-ios`).innerText       = data?.ios_version ?? "-";
+  document.getElementById(`total-build-${key}-cv`).innerText        = data?.cv ?? "-";
+  document.getElementById(`total-build-${key}-date`).innerText      = onlyDate(data?.created_at);
+}
+
+/* ───────── Stream별 로딩 ───────── */
+async function loadStream(streamName, key) {
+  const latest  = await api(`/latest/stream/${streamName}`);
+  const history = await api(`/history/stream/${streamName}`) || [];
+
+  setStreamLatest(key, latest);
+  renderHistory(`${key}-history`, history);
+}
+
+function setStreamLatest(key, data) {
+  document.getElementById(`${key}-latest-build`).innerText     = data?.build ?? "-";
+  document.getElementById(`${key}-latest-buildtype`).innerText = data?.build_type ?? "-";
+  document.getElementById(`${key}-latest-version`).innerText   = data?.version ?? "-";
+  document.getElementById(`${key}-latest-aos`).innerText       = data?.aos_version ?? "-";
+  document.getElementById(`${key}-latest-ios`).innerText       = data?.ios_version ?? "-";
+  document.getElementById(`${key}-latest-cv`).innerText        = data?.cv ?? "-";
+  document.getElementById(`${key}-latest-date`).innerText      = onlyDate(data?.created_at);
+}
+
+function renderHistory(tbodyId, list) {
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = "";
+  list.forEach(item => {
+    const tr = document.createElement("tr");
+    tr.className = "border-b";
+
+    tr.innerHTML = `
+      <td class="p-2">${onlyDate(item.created_at)}</td>
+      <td class="p-2">${item.build}</td>
+      <td class="p-2">${item.build_type}</td>
+      <td class="p-2">${item.version}</td>
+      <td class="p-2">${item.aos_version}</td>
+      <td class="p-2">${item.ios_version}</td>
+      <td class="p-2">${item.cv}</td>
+      <td class="p-2">
+        <button class="px-3 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600"
+                onclick="openDeletePopup(${item.id})">삭제</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ───────── 등록 로직 ───────── */
+function getInputForStream(key, isL10n=false) {
+  const build = isL10n ? "L10NTW" : document.getElementById(`${key}-input-build`).value;
+  const build_type = document.getElementById(`${key}-input-buildtype`).value;
+  const version = document.getElementById(`${key}-input-version`).value.trim();
+  const aos = document.getElementById(`${key}-input-aos`).value.trim();
+  const ios = document.getElementById(`${key}-input-ios`).value.trim();
+  const cv  = document.getElementById(`${key}-input-cv`).value.trim();
+  return { build, build_type, version, aos, ios, cv };
+}
+
+async function attemptRegisterStream(streamName, key, isL10n=false) {
+  const input = getInputForStream(key, isL10n);
+
+  // ★ 변경: 기본 필수값 검증
+  if (!input.version || !input.cv) {
+    alert("Version과 cv는 필수값입니다.");
+    return;
+  }
+  if (!input.aos && !input.ios) {
+    alert("AOS 또는 iOS 버전코드 중 하나 이상은 입력해야 합니다.");
+    return;
+  }
+
+  const history = await api(`/history/stream/${streamName}`) || [];
+
+  // Full Build 중복 체크
+  const duplicated = history.some(h =>
+    h.build === input.build &&
+    h.build_type === "Full Build" &&
+    input.build_type === "Full Build" &&
+    h.version === input.version &&
+    h.aos_version === input.aos &&
+    h.ios_version === input.ios
+  );
+
+  pendingRegister = {
+    stream: streamName,
+    key,
+    isL10n,
+    payload: {
+      stream: streamName,
+      build: input.build,
+      build_type: input.build_type,
+      version: input.version,
+      aos_version: input.aos,
+      ios_version: input.ios,
+      cv: input.cv,
+    }
+  };
+
+  if (duplicated) {
+    openPopup("같은 Stream/Build의 Full Build 기록이 이미 있습니다.<br>정말 등록하시겠습니까?");
+  } else {
+    openPopup("빌드 정보를 등록하시겠습니까?");
+  }
+}
+
+async function doRegister() {
+  if (!pendingRegister) return;
+  const key = pendingRegister.key;
+
+  // ★ 변경: 등록 실패 시 알림
+  const res = await api("/build/register", "POST", pendingRegister.payload);
+  if (!res) {
+    alert("빌드 등록 중 오류가 발생했습니다. 콘솔 로그를 확인해주세요.");
+    pendingRegister = null;
+    return;
+  }
+
+  // 입력 초기화
+  document.getElementById(`${key}-input-version`).value = "";
+  document.getElementById(`${key}-input-aos`).value = "";
+  document.getElementById(`${key}-input-ios`).value = "";
+  document.getElementById(`${key}-input-cv`).value = "";
+
+  pendingRegister = null;
+  await reloadAll();
+}
+
+/* ───────── 삭제 로직 ───────── */
+function openDeletePopup(id) {
+  pendingDelete = id;
+  openPopup("해당 빌드를 삭제하시겠습니까?");
+}
+
+async function doDelete() {
+  if (!pendingDelete) return;
+
+  // ★ 변경: 삭제 실패 시 알림
+  const res = await api(`/build/${pendingDelete}`, "DELETE");
+  if (!res) {
+    alert("빌드 삭제 중 오류가 발생했습니다. 콘솔 로그를 확인해주세요.");
+    pendingDelete = null;
+    return;
+  }
+
+  pendingDelete = null;
+  await reloadAll();
+}
+
+/* ───────── 팝업 ───────── */
+const popupOverlay = document.getElementById("popup-overlay");
+const popupBox     = document.getElementById("popup-box");
+const popupMsg     = document.getElementById("popup-message");
+const popupCancel  = document.getElementById("popup-cancel");
+const popupConfirm = document.getElementById("popup-confirm");
+
+function openPopup(msgHtml) {
+  popupMsg.innerHTML = msgHtml;
+  popupOverlay.classList.remove("hidden");
+  popupBox.classList.remove("hidden");
+}
+
+function closePopup() {
+  popupOverlay.classList.add("hidden");
+  popupBox.classList.add("hidden");
+}
+
+popupCancel.onclick = () => {
+  pendingRegister = null;
+  pendingDelete   = null;
+  closePopup();
+};
+
+popupConfirm.onclick = async () => {
+  if (pendingDelete) {
+    await doDelete();
+  } else if (pendingRegister) {
+    await doRegister();
+  }
+  closePopup();
+};
+
+/* ───────── 전체 재로드 ───────── */
+async function reloadAll() {
+  await Promise.all([
+    loadTotal(),
+    loadStream("LiveHotfixTW", "livehotfix"),
+    loadStream("StageTW",      "stage"),
+    loadStream("L10NTW",       "l10n"),
+  ]);
+}
+
+/* 초기 진입 */
+reloadAll();
+</script>
+
+</body>
+</html>
