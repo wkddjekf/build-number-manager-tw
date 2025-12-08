@@ -58,81 +58,146 @@
       <h1 class="text-3xl font-bold mb-6">Total Build Status</h1>
 
       <!-- Stream 최신 2개 -->
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-10">
+      <h2 class="text-xl font-semibold mb-3">Stream별 최신 빌드</h2>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
         <!-- LiveHotfixTW Stream -->
         <div class="bg-white p-6 rounded-xl shadow-md">
-          <h2 class="text-xl font-semibold mb-4">LiveHotfixTW Stream 최신 빌드</h2>
+          <h3 class="text-lg font-semibold mb-4">LiveHotfixTW Stream 최신 빌드</h3>
           <div class="space-y-1 text-sm">
             <p><b>Stream:</b> <span id="total-stream-livehotfix-stream">-</span></p>
             <p><b>Build:</b> <span id="total-stream-livehotfix-build">-</span></p>
             <p><b>BuildType:</b> <span id="total-stream-livehotfix-buildtype">-</span></p>
-            <p><b>Version:</b> <span id="total-stream-livehotfix-version">-</span></p>
-            <p><b>AOS VersionCode:</b> <span id="total-stream-livehotfix-aos">-</span></p>
-            <p><b>iOS VersionCode:</b> <span id="total-stream-livehotfix-ios">-</span></p>
-            <p><b>cv:</b> <span id="total-stream-livehotfix-cv">-</span></p>
+            <p>
+              <b>Version:</b>
+              <span id="total-stream-livehotfix-version" class="text-red-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>AOS VersionCode:</b>
+              <span id="total-stream-livehotfix-aos" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>iOS VersionCode:</b>
+              <span id="total-stream-livehotfix-ios" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>cv:</b>
+              <span id="total-stream-livehotfix-cv" class="text-red-600 font-bold">-</span>
+            </p>
             <p><b>Date:</b> <span id="total-stream-livehotfix-date">-</span></p>
           </div>
         </div>
 
         <!-- StageTW Stream -->
         <div class="bg-white p-6 rounded-xl shadow-md">
-          <h2 class="text-xl font-semibold mb-4">StageTW Stream 최신 빌드</h2>
+          <h3 class="text-lg font-semibold mb-4">StageTW Stream 최신 빌드</h3>
           <div class="space-y-1 text-sm">
             <p><b>Stream:</b> <span id="total-stream-stage-stream">-</span></p>
             <p><b>Build:</b> <span id="total-stream-stage-build">-</span></p>
             <p><b>BuildType:</b> <span id="total-stream-stage-buildtype">-</span></p>
-            <p><b>Version:</b> <span id="total-stream-stage-version">-</span></p>
-            <p><b>AOS VersionCode:</b> <span id="total-stream-stage-aos">-</span></p>
-            <p><b>iOS VersionCode:</b> <span id="total-stream-stage-ios">-</span></p>
-            <p><b>cv:</b> <span id="total-stream-stage-cv">-</span></p>
+            <p>
+              <b>Version:</b>
+              <span id="total-stream-stage-version" class="text-red-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>AOS VersionCode:</b>
+              <span id="total-stream-stage-aos" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>iOS VersionCode:</b>
+              <span id="total-stream-stage-ios" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>cv:</b>
+              <span id="total-stream-stage-cv" class="text-red-600 font-bold">-</span>
+            </p>
             <p><b>Date:</b> <span id="total-stream-stage-date">-</span></p>
           </div>
         </div>
       </div>
 
+      <!-- 구분선 -->
+      <hr class="my-6 border-gray-300" />
+
       <!-- Build 종류별 최신 3개 -->
+      <h2 class="text-xl font-semibold mb-3">Build Type별 최신 빌드</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- LiveTW Build -->
         <div class="bg-white p-6 rounded-xl shadow-md">
-          <h2 class="text-xl font-semibold mb-4">LiveTW Build 최신 빌드</h2>
+          <h3 class="text-lg font-semibold mb-4">LiveTW Build 최신 빌드</h3>
           <div class="space-y-1 text-sm">
             <p><b>Build:</b> <span id="total-build-livetw-build">-</span></p>
             <p><b>BuildType:</b> <span id="total-build-livetw-buildtype">-</span></p>
             <p><b>Stream:</b> <span id="total-build-livetw-stream">-</span></p>
-            <p><b>Version:</b> <span id="total-build-livetw-version">-</span></p>
-            <p><b>AOS VersionCode:</b> <span id="total-build-livetw-aos">-</span></p>
-            <p><b>iOS VersionCode:</b> <span id="total-build-livetw-ios">-</span></p>
-            <p><b>cv:</b> <span id="total-build-livetw-cv">-</span></p>
+            <p>
+              <b>Version:</b>
+              <span id="total-build-livetw-version" class="text-red-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>AOS VersionCode:</b>
+              <span id="total-build-livetw-aos" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>iOS VersionCode:</b>
+              <span id="total-build-livetw-ios" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>cv:</b>
+              <span id="total-build-livetw-cv" class="text-red-600 font-bold">-</span>
+            </p>
             <p><b>Date:</b> <span id="total-build-livetw-date">-</span></p>
           </div>
         </div>
 
         <!-- StageTW Build -->
         <div class="bg-white p-6 rounded-xl shadow-md">
-          <h2 class="text-xl font-semibold mb-4">StageTW Build 최신 빌드</h2>
+          <h3 class="text-lg font-semibold mb-4">StageTW Build 최신 빌드</h3>
           <div class="space-y-1 text-sm">
             <p><b>Build:</b> <span id="total-build-stagetw-build">-</span></p>
             <p><b>BuildType:</b> <span id="total-build-stagetw-buildtype">-</span></p>
             <p><b>Stream:</b> <span id="total-build-stagetw-stream">-</span></p>
-            <p><b>Version:</b> <span id="total-build-stagetw-version">-</span></p>
-            <p><b>AOS VersionCode:</b> <span id="total-build-stagetw-aos">-</span></p>
-            <p><b>iOS VersionCode:</b> <span id="total-build-stagetw-ios">-</span></p>
-            <p><b>cv:</b> <span id="total-build-stagetw-cv">-</span></p>
+            <p>
+              <b>Version:</b>
+              <span id="total-build-stagetw-version" class="text-red-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>AOS VersionCode:</b>
+              <span id="total-build-stagetw-aos" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>iOS VersionCode:</b>
+              <span id="total-build-stagetw-ios" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>cv:</b>
+              <span id="total-build-stagetw-cv" class="text-red-600 font-bold">-</span>
+            </p>
             <p><b>Date:</b> <span id="total-build-stagetw-date">-</span></p>
           </div>
         </div>
 
         <!-- L10NTW Build -->
         <div class="bg-white p-6 rounded-xl shadow-md">
-          <h2 class="text-xl font-semibold mb-4">L10NTW Build 최신 빌드</h2>
+          <h3 class="text-lg font-semibold mb-4">L10NTW Build 최신 빌드</h3>
           <div class="space-y-1 text-sm">
             <p><b>Build:</b> <span id="total-build-l10ntw-build">-</span></p>
             <p><b>BuildType:</b> <span id="total-build-l10ntw-buildtype">-</span></p>
             <p><b>Stream:</b> <span id="total-build-l10ntw-stream">-</span></p>
-            <p><b>Version:</b> <span id="total-build-l10ntw-version">-</span></p>
-            <p><b>AOS VersionCode:</b> <span id="total-build-l10ntw-aos">-</span></p>
-            <p><b>iOS VersionCode:</b> <span id="total-build-l10ntw-ios">-</span></p>
-            <p><b>cv:</b> <span id="total-build-l10ntw-cv">-</span></p>
+            <p>
+              <b>Version:</b>
+              <span id="total-build-l10ntw-version" class="text-red-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>AOS VersionCode:</b>
+              <span id="total-build-l10ntw-aos" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>iOS VersionCode:</b>
+              <span id="total-build-l10ntw-ios" class="text-blue-600 font-bold">-</span>
+            </p>
+            <p>
+              <b>cv:</b>
+              <span id="total-build-l10ntw-cv" class="text-red-600 font-bold">-</span>
+            </p>
             <p><b>Date:</b> <span id="total-build-l10ntw-date">-</span></p>
           </div>
         </div>
@@ -149,10 +214,22 @@
         <p><b>Stream:</b> LiveHotfixTW</p>
         <p><b>Build:</b> <span id="livehotfix-latest-build">-</span></p>
         <p><b>BuildType:</b> <span id="livehotfix-latest-buildtype">-</span></p>
-        <p><b>Version:</b> <span id="livehotfix-latest-version">-</span></p>
-        <p><b>AOS:</b> <span id="livehotfix-latest-aos">-</span></p>
-        <p><b>iOS:</b> <span id="livehotfix-latest-ios">-</span></p>
-        <p><b>cv:</b> <span id="livehotfix-latest-cv">-</span></p>
+        <p>
+          <b>Version:</b>
+          <span id="livehotfix-latest-version" class="text-red-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>AOS:</b>
+          <span id="livehotfix-latest-aos" class="text-blue-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>iOS:</b>
+          <span id="livehotfix-latest-ios" class="text-blue-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>cv:</b>
+          <span id="livehotfix-latest-cv" class="text-red-600 font-bold">-</span>
+        </p>
         <p><b>Date:</b> <span id="livehotfix-latest-date">-</span></p>
       </div>
 
@@ -229,10 +306,22 @@
         <p><b>Stream:</b> StageTW</p>
         <p><b>Build:</b> <span id="stage-latest-build">-</span></p>
         <p><b>BuildType:</b> <span id="stage-latest-buildtype">-</span></p>
-        <p><b>Version:</b> <span id="stage-latest-version">-</span></p>
-        <p><b>AOS:</b> <span id="stage-latest-aos">-</span></p>
-        <p><b>iOS:</b> <span id="stage-latest-ios">-</span></p>
-        <p><b>cv:</b> <span id="stage-latest-cv">-</span></p>
+        <p>
+          <b>Version:</b>
+          <span id="stage-latest-version" class="text-red-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>AOS:</b>
+          <span id="stage-latest-aos" class="text-blue-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>iOS:</b>
+          <span id="stage-latest-ios" class="text-blue-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>cv:</b>
+          <span id="stage-latest-cv" class="text-red-600 font-bold">-</span>
+        </p>
         <p><b>Date:</b> <span id="stage-latest-date">-</span></p>
       </div>
 
@@ -309,10 +398,22 @@
         <p><b>Stream:</b> L10NTW</p>
         <p><b>Build:</b> <span id="l10n-latest-build">-</span></p>
         <p><b>BuildType:</b> <span id="l10n-latest-buildtype">-</span></p>
-        <p><b>Version:</b> <span id="l10n-latest-version">-</span></p>
-        <p><b>AOS:</b> <span id="l10n-latest-aos">-</span></p>
-        <p><b>iOS:</b> <span id="l10n-latest-ios">-</span></p>
-        <p><b>cv:</b> <span id="l10n-latest-cv">-</span></p>
+        <p>
+          <b>Version:</b>
+          <span id="l10n-latest-version" class="text-red-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>AOS:</b>
+          <span id="l10n-latest-aos" class="text-blue-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>iOS:</b>
+          <span id="l10n-latest-ios" class="text-blue-600 font-bold">-</span>
+        </p>
+        <p>
+          <b>cv:</b>
+          <span id="l10n-latest-cv" class="text-red-600 font-bold">-</span>
+        </p>
         <p><b>Date:</b> <span id="l10n-latest-date">-</span></p>
       </div>
 
@@ -388,7 +489,6 @@ let pendingRegister = null;
 let pendingDelete   = null;
 
 /* ───────── 공통 API ───────── */
-// ★ 변경: 에러 시 콘솔 로깅 + 호출자에게 null 반환
 async function api(path, method="GET", body=null) {
   try {
     const res = await fetch(`${API_BASE}${path}`, {
@@ -416,7 +516,7 @@ function showPage(pageKey) {
   document.querySelectorAll("nav button").forEach(b => b.classList.remove("bg-gray-800"));
   document.getElementById(`btn-${pageKey}`).classList.add("bg-gray-800");
 
-  reloadAll();  // 페이지 전환 시 전체 갱신
+  reloadAll();
 }
 
 /* ───────── TOTAL 로딩 ───────── */
@@ -493,10 +593,10 @@ function renderHistory(tbodyId, list) {
       <td class="p-2">${onlyDate(item.created_at)}</td>
       <td class="p-2">${item.build}</td>
       <td class="p-2">${item.build_type}</td>
-      <td class="p-2">${item.version}</td>
-      <td class="p-2">${item.aos_version}</td>
-      <td class="p-2">${item.ios_version}</td>
-      <td class="p-2">${item.cv}</td>
+      <td class="p-2 text-red-600 font-bold">${item.version}</td>
+      <td class="p-2 text-blue-600 font-bold">${item.aos_version}</td>
+      <td class="p-2 text-blue-600 font-bold">${item.ios_version}</td>
+      <td class="p-2 text-red-600 font-bold">${item.cv}</td>
       <td class="p-2">
         <button class="px-3 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600"
                 onclick="openDeletePopup(${item.id})">삭제</button>
@@ -520,7 +620,6 @@ function getInputForStream(key, isL10n=false) {
 async function attemptRegisterStream(streamName, key, isL10n=false) {
   const input = getInputForStream(key, isL10n);
 
-  // ★ 변경: 기본 필수값 검증
   if (!input.version || !input.cv) {
     alert("Version과 cv는 필수값입니다.");
     return;
@@ -532,7 +631,6 @@ async function attemptRegisterStream(streamName, key, isL10n=false) {
 
   const history = await api(`/history/stream/${streamName}`) || [];
 
-  // Full Build 중복 체크
   const duplicated = history.some(h =>
     h.build === input.build &&
     h.build_type === "Full Build" &&
@@ -568,7 +666,6 @@ async function doRegister() {
   if (!pendingRegister) return;
   const key = pendingRegister.key;
 
-  // ★ 변경: 등록 실패 시 알림
   const res = await api("/build/register", "POST", pendingRegister.payload);
   if (!res) {
     alert("빌드 등록 중 오류가 발생했습니다. 콘솔 로그를 확인해주세요.");
@@ -576,7 +673,6 @@ async function doRegister() {
     return;
   }
 
-  // 입력 초기화
   document.getElementById(`${key}-input-version`).value = "";
   document.getElementById(`${key}-input-aos`).value = "";
   document.getElementById(`${key}-input-ios`).value = "";
@@ -595,7 +691,6 @@ function openDeletePopup(id) {
 async function doDelete() {
   if (!pendingDelete) return;
 
-  // ★ 변경: 삭제 실패 시 알림
   const res = await api(`/build/${pendingDelete}`, "DELETE");
   if (!res) {
     alert("빌드 삭제 중 오류가 발생했습니다. 콘솔 로그를 확인해주세요.");
