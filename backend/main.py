@@ -48,8 +48,6 @@ class BuildCreate(BaseModel):
     ios_version: str
     cv: str
 
-    jenkins_url: Optional[str] = None
-
 class BuildOut(BaseModel):
     id: int
     stream: str
@@ -60,8 +58,6 @@ class BuildOut(BaseModel):
     ios_version: Optional[str]
     cv: Optional[str]
     created_at: datetime
-
-    jenkins_url: Optional[str] = None
 
     model_config = {"from_attributes": True}
     

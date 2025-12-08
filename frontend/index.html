@@ -84,7 +84,6 @@
               <span id="total-stream-livehotfix-cv" class="text-red-600 font-bold">-</span>
             </p>
             <p><b>Date:</b> <span id="total-stream-livehotfix-date">-</span></p>
-            <p><b>Jenkins:</b> <span id="total-stream-livehotfix-jenkins">-</span></p>
           </div>
         </div>
 
@@ -112,7 +111,6 @@
               <span id="total-stream-stage-cv" class="text-red-600 font-bold">-</span>
             </p>
             <p><b>Date:</b> <span id="total-stream-stage-date">-</span></p>
-            <p><b>Jenkins:</b> <span id="total-stream-stage-jenkins">-</span></p>
           </div>
         </div>
       </div>
@@ -552,15 +550,6 @@ function setTotalStreamCard(key, data) {
   document.getElementById(`total-stream-${key}-ios`).innerText       = data?.ios_version ?? "-";
   document.getElementById(`total-stream-${key}-cv`).innerText        = data?.cv ?? "-";
   document.getElementById(`total-stream-${key}-date`).innerText      = onlyDate(data?.created_at);
-
-  // ★ Jenkins 링크 (있을 때만 a 태그로)
-  const jenkinsSpan = document.getElementById(`total-stream-${key}-jenkins`);
-  if (data?.jenkins_url) {
-    jenkinsSpan.innerHTML =
-      `<a href="${data.jenkins_url}" target="_blank" class="text-blue-600 underline">열기</a>`;
-  } else {
-    jenkinsSpan.innerText = "-";
-  }
 }
 
 

@@ -19,9 +19,7 @@ class BuildRecord(Base):
     version = Column(String, index=True)
     aos_version = Column(String)
     ios_version = Column(String)
-    cv = Column(String)
-
+    cv = Column(String) 
     created_at = Column(DateTime(timezone=False), server_default=func.now(), index=True)
 
-    # ★ 추가: Jenkins URL 저장용
-    jenkins_url = Column(String, nullable=True)     
+    
