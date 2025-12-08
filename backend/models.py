@@ -6,10 +6,13 @@ class BuildRecord(Base):
     __tablename__ = "build_records"
 
     id = Column(Integer, primary_key=True, index=True)
+    
     # Stream: LiveHotfixTW / StageTW / L10NTW
     stream = Column(String, index=True)
+    
     # Build: LiveTW / StageTW / L10NTW
     build = Column(String, index=True)
+    
     # BuildType: Full Build / DataOnly / DLC
     build_type = Column(String, index=True)
 
@@ -19,3 +22,6 @@ class BuildRecord(Base):
     cv = Column(String)
 
     created_at = Column(DateTime(timezone=False), server_default=func.now(), index=True)
+
+    # ★ 추가: Jenkins URL 저장용
+    jenkins_url = Column(String, nullable=True)     

@@ -48,6 +48,8 @@ class BuildCreate(BaseModel):
     ios_version: str
     cv: str
 
+    jenkins_url: Optional[str] = None
+
 class BuildOut(BaseModel):
     id: int
     stream: str
@@ -58,7 +60,11 @@ class BuildOut(BaseModel):
     ios_version: Optional[str]
     cv: Optional[str]
     created_at: datetime
+
+    jenkins_url: Optional[str] = None
+
     model_config = {"from_attributes": True}
+    
 
 # ─────────────────────────────
 # 건강 체크
@@ -109,6 +115,7 @@ def register_build(payload: BuildCreate, db: Session = Depends(get_db)):
         aos_version=payload.aos_version,
         ios_version=payload.ios_version,
         cv=payload.cv,
+        jenkins_url=payload.jenkins_url, 
     )
 
 # ─────────────────────────────
