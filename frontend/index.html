@@ -84,6 +84,7 @@
               <span id="total-stream-livehotfix-cv" class="text-red-600 font-bold">-</span>
             </p>
             <p><b>Date:</b> <span id="total-stream-livehotfix-date">-</span></p>
+            <p><b>타겟 업데이트 일자:</b> <span id="total-stream-livehotfix-target">-</span></p>
           </div>
         </div>
 
@@ -111,6 +112,7 @@
               <span id="total-stream-stage-cv" class="text-red-600 font-bold">-</span>
             </p>
             <p><b>Date:</b> <span id="total-stream-stage-date">-</span></p>
+            <p><b>타겟 업데이트 일자:</b> <span id="total-stream-stage-target">-</span></p>
           </div>
         </div>
       </div>
@@ -145,6 +147,7 @@
               <span id="total-build-livetw-cv" class="text-red-600 font-bold">-</span>
             </p>
             <p><b>Date:</b> <span id="total-build-livetw-date">-</span></p>
+            <p><b>타겟 업데이트 일자:</b> <span id="total-build-livetw-target">-</span></p>
           </div>
         </div>
 
@@ -172,6 +175,7 @@
               <span id="total-build-stagetw-cv" class="text-red-600 font-bold">-</span>
             </p>
             <p><b>Date:</b> <span id="total-build-stagetw-date">-</span></p>
+            <p><b>타겟 업데이트 일자:</b> <span id="total-build-stagetw-target">-</span></p>
           </div>
         </div>
 
@@ -199,6 +203,7 @@
               <span id="total-build-l10ntw-cv" class="text-red-600 font-bold">-</span>
             </p>
             <p><b>Date:</b> <span id="total-build-l10ntw-date">-</span></p>
+            <p><b>타겟 업데이트 일자:</b> <span id="total-build-l10ntw-target">-</span></p>
           </div>
         </div>
       </div>
@@ -231,6 +236,7 @@
           <span id="livehotfix-latest-cv" class="text-red-600 font-bold">-</span>
         </p>
         <p><b>Date:</b> <span id="livehotfix-latest-date">-</span></p>
+        <p><b>타겟 업데이트 일자:</b> <span id="livehotfix-latest-target">-</span></p>
       </div>
 
       <!-- 등록 -->
@@ -268,6 +274,10 @@
             <label class="font-semibold text-sm">cv</label>
             <input id="livehotfix-input-cv" class="p-2 border rounded w-full text-sm" />
           </div>
+          <div>
+            <label class="font-semibold text-sm">타겟 업데이트 일자</label>
+            <input id="livehotfix-input-target-date" type="date" class="p-2 border rounded w-full text-sm" />
+          </div>
         </div>
         <button onclick="attemptRegisterStream('LiveHotfixTW', 'livehotfix')"
                 class="mt-5 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
@@ -282,6 +292,7 @@
           <thead>
           <tr class="bg-gray-100 border-b">
             <th class="p-2 text-left">Date</th>
+            <th class="p-2 text-left">TargetDate</th>
             <th class="p-2 text-left">Build</th>
             <th class="p-2 text-left">Type</th>
             <th class="p-2 text-left">Version</th>
@@ -323,6 +334,7 @@
           <span id="stage-latest-cv" class="text-red-600 font-bold">-</span>
         </p>
         <p><b>Date:</b> <span id="stage-latest-date">-</span></p>
+        <p><b>타겟 업데이트 일자:</b> <span id="stage-latest-target">-</span></p>
       </div>
 
       <!-- 등록 -->
@@ -360,6 +372,10 @@
             <label class="font-semibold text-sm">cv</label>
             <input id="stage-input-cv" class="p-2 border rounded w-full text-sm" />
           </div>
+          <div>
+            <label class="font-semibold text-sm">타겟 업데이트 일자</label>
+            <input id="stage-input-target-date" type="date" class="p-2 border rounded w-full text-sm" />
+          </div>
         </div>
         <button onclick="attemptRegisterStream('StageTW', 'stage')"
                 class="mt-5 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
@@ -374,6 +390,7 @@
           <thead>
           <tr class="bg-gray-100 border-b">
             <th class="p-2 text-left">Date</th>
+            <th class="p-2 text-left">TargetDate</th>
             <th class="p-2 text-left">Build</th>
             <th class="p-2 text-left">Type</th>
             <th class="p-2 text-left">Version</th>
@@ -415,6 +432,7 @@
           <span id="l10n-latest-cv" class="text-red-600 font-bold">-</span>
         </p>
         <p><b>Date:</b> <span id="l10n-latest-date">-</span></p>
+        <p><b>타겟 업데이트 일자:</b> <span id="l10n-latest-target">-</span></p>
       </div>
 
       <!-- 등록 (Build 고정: L10NTW) -->
@@ -446,10 +464,14 @@
             <input id="l10n-input-ios" class="p-2 border rounded w-full text-sm" />
           </div>
         </div>
-        <div class="grid grid-cols-1 mt-4">
+        <div class="grid grid-cols-2 gap-4 mt-4">
           <div>
             <label class="font-semibold text-sm">cv</label>
             <input id="l10n-input-cv" class="p-2 border rounded w-full text-sm" />
+          </div>
+          <div>
+            <label class="font-semibold text-sm">타겟 업데이트 일자</label>
+            <input id="l10n-input-target-date" type="date" class="p-2 border rounded w-full text-sm" />
           </div>
         </div>
 
@@ -466,6 +488,7 @@
           <thead>
           <tr class="bg-gray-100 border-b">
             <th class="p-2 text-left">Date</th>
+            <th class="p-2 text-left">TargetDate</th>
             <th class="p-2 text-left">Build</th>
             <th class="p-2 text-left">Type</th>
             <th class="p-2 text-left">Version</th>
@@ -550,8 +573,8 @@ function setTotalStreamCard(key, data) {
   document.getElementById(`total-stream-${key}-ios`).innerText       = data?.ios_version ?? "-";
   document.getElementById(`total-stream-${key}-cv`).innerText        = data?.cv ?? "-";
   document.getElementById(`total-stream-${key}-date`).innerText      = onlyDate(data?.created_at);
+  document.getElementById(`total-stream-${key}-target`).innerText    = onlyDate(data?.target_update_date);
 }
-
 
 function setTotalBuildCard(key, data) {
   document.getElementById(`total-build-${key}-build`).innerText     = data?.build ?? "-";
@@ -562,6 +585,7 @@ function setTotalBuildCard(key, data) {
   document.getElementById(`total-build-${key}-ios`).innerText       = data?.ios_version ?? "-";
   document.getElementById(`total-build-${key}-cv`).innerText        = data?.cv ?? "-";
   document.getElementById(`total-build-${key}-date`).innerText      = onlyDate(data?.created_at);
+  document.getElementById(`total-build-${key}-target`).innerText    = onlyDate(data?.target_update_date);
 }
 
 /* ───────── Stream별 로딩 ───────── */
@@ -581,6 +605,7 @@ function setStreamLatest(key, data) {
   document.getElementById(`${key}-latest-ios`).innerText       = data?.ios_version ?? "-";
   document.getElementById(`${key}-latest-cv`).innerText        = data?.cv ?? "-";
   document.getElementById(`${key}-latest-date`).innerText      = onlyDate(data?.created_at);
+  document.getElementById(`${key}-latest-target`).innerText    = onlyDate(data?.target_update_date);
 }
 
 function renderHistory(tbodyId, list) {
@@ -592,6 +617,7 @@ function renderHistory(tbodyId, list) {
 
     tr.innerHTML = `
       <td class="p-2">${onlyDate(item.created_at)}</td>
+      <td class="p-2">${onlyDate(item.target_update_date)}</td>
       <td class="p-2">${item.build}</td>
       <td class="p-2">${item.build_type}</td>
       <td class="p-2 text-red-600 font-bold">${item.version}</td>
@@ -615,7 +641,10 @@ function getInputForStream(key, isL10n=false) {
   const aos = document.getElementById(`${key}-input-aos`).value.trim();
   const ios = document.getElementById(`${key}-input-ios`).value.trim();
   const cv  = document.getElementById(`${key}-input-cv`).value.trim();
-  return { build, build_type, version, aos, ios, cv };
+  const targetInput = document.getElementById(`${key}-input-target-date`);
+  const target_date = targetInput ? targetInput.value : "";
+
+  return { build, build_type, version, aos, ios, cv, target_date };
 }
 
 async function attemptRegisterStream(streamName, key, isL10n=false) {
@@ -653,6 +682,7 @@ async function attemptRegisterStream(streamName, key, isL10n=false) {
       aos_version: input.aos,
       ios_version: input.ios,
       cv: input.cv,
+      target_update_date: input.target_date || null,
     }
   };
 
@@ -678,6 +708,8 @@ async function doRegister() {
   document.getElementById(`${key}-input-aos`).value = "";
   document.getElementById(`${key}-input-ios`).value = "";
   document.getElementById(`${key}-input-cv`).value = "";
+  const targetInput = document.getElementById(`${key}-input-target-date`);
+  if (targetInput) targetInput.value = "";
 
   pendingRegister = null;
   await reloadAll();
