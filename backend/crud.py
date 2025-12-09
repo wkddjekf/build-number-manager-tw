@@ -2,11 +2,10 @@
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
+from datetime import date
+
 from . import models
 
-# ─────────────────────────────
-# 공통: 세션 유틸
-# ─────────────────────────────
 
 def get_latest_by_stream(db: Session, stream: str) -> Optional[models.BuildRecord]:
     return (
@@ -26,7 +25,11 @@ def get_latest_by_build(db: Session, build: str) -> Optional[models.BuildRecord]
     )
 
 
-def get_history_by_stream(db: Session, stream: str, limit: int = 20) -> List[models.BuildRecord]:
+def get_history_by_stream(
+    db: Session,
+    stream: str,
+    limit: int = 20,
+) -> List[models.BuildRecord]:
     return (
         db.query(models.BuildRecord)
         .filter(models.BuildRecord.stream == stream)
@@ -36,7 +39,11 @@ def get_history_by_stream(db: Session, stream: str, limit: int = 20) -> List[mod
     )
 
 
-def get_history_by_build(db: Session, build: str, limit: int = 20) -> List[models.BuildRecord]:
+def get_history_by_build(
+    db: Session,
+    build: str,
+    limit: int = 20,
+) -> List[models.BuildRecord]:
     return (
         db.query(models.BuildRecord)
         .filter(models.BuildRecord.build == build)
@@ -56,6 +63,7 @@ def create_build(
     aos_version: str,
     ios_version: str,
     cv: str,
+    target_update_date: Optional[date] = None,
 ) -> models.BuildRecord:
     record = models.BuildRecord(
         stream=stream,
@@ -65,6 +73,7 @@ def create_build(
         aos_version=aos_version,
         ios_version=ios_version,
         cv=cv,
+        target_update_date=target_update_date,
     )
     db.add(record)
     db.commit()

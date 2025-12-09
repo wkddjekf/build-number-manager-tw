@@ -1,14 +1,14 @@
 # backend/main.py
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles   # ★ 추가됨
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
 from sqlalchemy.orm import Session
 
 from .database import SessionLocal, engine, Base
 from . import models, crud
-from datetime import datetime
+from datetime import datetime, date
 
 # DB 테이블 생성
 Base.metadata.create_all(bind=engine)
@@ -47,6 +47,9 @@ class BuildCreate(BaseModel):
     aos_version: str
     ios_version: str
     cv: str
+    # 새로 추가: 타겟 업데이트 일자 (선택)
+    target_update_date: Optional[date] = None
+
 
 class BuildOut(BaseModel):
     id: int
@@ -57,10 +60,11 @@ class BuildOut(BaseModel):
     aos_version: Optional[str]
     ios_version: Optional[str]
     cv: Optional[str]
+    target_update_date: Optional[date] = None
     created_at: datetime
 
     model_config = {"from_attributes": True}
-    
+
 
 # ─────────────────────────────
 # 건강 체크
@@ -111,7 +115,7 @@ def register_build(payload: BuildCreate, db: Session = Depends(get_db)):
         aos_version=payload.aos_version,
         ios_version=payload.ios_version,
         cv=payload.cv,
-        jenkins_url=payload.jenkins_url, 
+        target_update_date=payload.target_update_date,
     )
 
 # ─────────────────────────────
@@ -126,7 +130,7 @@ def delete_build(build_id: int, db: Session = Depends(get_db)):
 
 
 # =====================================================
-#  ★★ 여기가 핵심: 프론트엔드 정적파일 마운트 ★★
+#  프론트엔드 정적파일 마운트
 # =====================================================
 app.mount(
     "/",  # 루트 URL
