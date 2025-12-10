@@ -241,22 +241,14 @@
 
       <!-- 등록 -->
       <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
-        <!-- 제목 + Latest VersionCode 한 줄에 배치 -->
-        <div class="flex items-baseline justify-between mb-4">
-          <h2 class="text-xl font-semibold">빌드 정보 등록</h2>
-          <div class="text-base font-bold text-gray-700">
-            Latest VersionCode:
-            <span class="ml-2">
-              AOS:
-              <span id="livehotfix-form-latest-aos" class="text-blue-600">-</span>
-            </span>
-            <span class="ml-3">
-              iOS:
-              <span id="livehotfix-form-latest-ios" class="text-blue-600">-</span>
-            </span>
+        <div class="flex items-center mb-4">
+          <h2 class="text-xl font-semibold mr-4">빌드 정보 등록</h2>
+          <div class="text-sm font-bold text-gray-700">
+            Latest <span class="underline">VersionCode</span>:
+            <span class="ml-1 text-blue-700">AOS: <span class="latest-vc-aos">000</span></span>
+            <span class="ml-3 text-blue-700">iOS: <span class="latest-vc-ios">000</span></span>
           </div>
         </div>
-
         <div class="grid grid-cols-6 gap-4">
           <div>
             <label class="font-semibold text-sm">Build</label>
@@ -354,21 +346,14 @@
 
       <!-- 등록 -->
       <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
-        <div class="flex items-baseline justify-between mb-4">
-          <h2 class="text-xl font-semibold">빌드 정보 등록</h2>
-          <div class="text-base font-bold text-gray-700">
-            Latest VersionCode:
-            <span class="ml-2">
-              AOS:
-              <span id="stage-form-latest-aos" class="text-blue-600">-</span>
-            </span>
-            <span class="ml-3">
-              iOS:
-              <span id="stage-form-latest-ios" class="text-blue-600">-</span>
-            </span>
+        <div class="flex items-center mb-4">
+          <h2 class="text-xl font-semibold mr-4">빌드 정보 등록</h2>
+          <div class="text-sm font-bold text-gray-700">
+            Latest <span class="underline">VersionCode</span>:
+            <span class="ml-1 text-blue-700">AOS: <span class="latest-vc-aos">000</span></span>
+            <span class="ml-3 text-blue-700">iOS: <span class="latest-vc-ios">000</span></span>
           </div>
         </div>
-
         <div class="grid grid-cols-6 gap-4">
           <div>
             <label class="font-semibold text-sm">Build</label>
@@ -466,21 +451,14 @@
 
       <!-- 등록 (Build 고정: L10NTW) -->
       <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
-        <div class="flex items-baseline justify-between mb-4">
-          <h2 class="text-xl font-semibold">빌드 정보 등록</h2>
-          <div class="text-base font-bold text-gray-700">
-            Latest VersionCode:
-            <span class="ml-2">
-              AOS:
-              <span id="l10n-form-latest-aos" class="text-blue-600">-</span>
-            </span>
-            <span class="ml-3">
-              iOS:
-              <span id="l10n-form-latest-ios" class="text-blue-600">-</span>
-            </span>
+        <div class="flex items-center mb-4">
+          <h2 class="text-xl font-semibold mr-4">빌드 정보 등록</h2>
+          <div class="text-sm font-bold text-gray-700">
+            Latest <span class="underline">VersionCode</span>:
+            <span class="ml-1 text-blue-700">AOS: <span class="latest-vc-aos">000</span></span>
+            <span class="ml-3 text-blue-700">iOS: <span class="latest-vc-ios">000</span></span>
           </div>
         </div>
-
         <div class="grid grid-cols-5 gap-4">
           <div>
             <label class="font-semibold text-sm">Build</label>
@@ -637,7 +615,6 @@ async function loadStream(streamName, key) {
   const history = await api(`/history/stream/${streamName}`) || [];
 
   setStreamLatest(key, latest);
-  setFormLatestVersionCode(key, latest);     // ★ 폼 상단 Latest VersionCode 갱신
   renderHistory(`${key}-history`, history);
 }
 
@@ -650,16 +627,6 @@ function setStreamLatest(key, data) {
   document.getElementById(`${key}-latest-cv`).innerText        = data?.cv ?? "-";
   document.getElementById(`${key}-latest-date`).innerText      = onlyDate(data?.created_at);
   document.getElementById(`${key}-latest-target`).innerText    = onlyDate(data?.target_update_date);
-}
-
-/* 폼 상단 Latest VersionCode 텍스트 갱신 */
-function setFormLatestVersionCode(key, data) {
-  const aosSpan = document.getElementById(`${key}-form-latest-aos`);
-  const iosSpan = document.getElementById(`${key}-form-latest-ios`);
-  if (!aosSpan || !iosSpan) return;
-
-  aosSpan.innerText = data?.aos_version ?? "-";
-  iosSpan.innerText = data?.ios_version ?? "-";
 }
 
 function renderHistory(tbodyId, list) {
@@ -685,6 +652,28 @@ function renderHistory(tbodyId, list) {
     `;
     tbody.appendChild(tr);
   });
+}
+
+/* ───────── Global Latest VersionCode ───────── */
+async function loadLatestVersionCodeGlobal() {
+  const streams = ["LiveHotfixTW", "StageTW", "L10NTW"];
+  let latestRecord = null;
+
+  for (const s of streams) {
+    const history = await api(`/history/stream/${s}`) || [];
+    for (const item of history) {
+      if (!item?.created_at) continue;
+      if (!latestRecord || new Date(item.created_at) > new Date(latestRecord.created_at)) {
+        latestRecord = item;
+      }
+    }
+  }
+
+  const aos = latestRecord?.aos_version || "000";
+  const ios = latestRecord?.ios_version || "000";
+
+  document.querySelectorAll(".latest-vc-aos").forEach(el => el.innerText = aos);
+  document.querySelectorAll(".latest-vc-ios").forEach(el => el.innerText = ios);
 }
 
 /* ───────── 등록 로직 ───────── */
@@ -714,8 +703,8 @@ async function attemptRegisterStream(streamName, key, isL10n=false) {
   }
 
   const history = await api(`/history/stream/${streamName}`) || [];
+  const latest = history[0];
 
-  // 기존 중복 Full Build 체크
   const duplicated = history.some(h =>
     h.build === input.build &&
     h.build_type === "Full Build" &&
@@ -725,14 +714,21 @@ async function attemptRegisterStream(streamName, key, isL10n=false) {
     h.ios_version === input.ios
   );
 
-  // ★ 직전 기록과 CV 비교
-  const last = history.length > 0 ? history[0] : null;
-  const cvDifferent = !!(
-    last &&
-    last.cv &&
-    input.cv &&
-    String(last.cv) !== String(input.cv)
-  );
+  let diffCv = false;
+  if (latest && latest.cv && input.cv && latest.cv !== input.cv) {
+    diffCv = true;
+  }
+
+  let message = "";
+  if (duplicated && diffCv) {
+    message = "같은 Stream/Build의 Full Build 기록이 이미 있습니다.<br>또한 CV 정보가 직전 빌드와 다릅니다.<br>등록하시겠습니까?";
+  } else if (duplicated) {
+    message = "같은 Stream/Build의 Full Build 기록이 이미 있습니다.<br>정말 등록하시겠습니까?";
+  } else if (diffCv) {
+    message = "CV 정보가 직전 빌드와 다릅니다.<br>등록하시겠습니까?";
+  } else {
+    message = "빌드 정보를 등록하시겠습니까?";
+  }
 
   pendingRegister = {
     stream: streamName,
@@ -750,20 +746,7 @@ async function attemptRegisterStream(streamName, key, isL10n=false) {
     }
   };
 
-  // 팝업 메시지 구성
-  const msgs = [];
-  if (duplicated) {
-    msgs.push("같은 Stream/Build의 Full Build 기록이 이미 있습니다.");
-  }
-  if (cvDifferent) {
-    msgs.push("CV 정보가 이전 빌드와 다릅니다.");
-  }
-
-  if (msgs.length > 0) {
-    openPopup(msgs.join("<br>") + "<br>정말 등록하시겠습니까?");
-  } else {
-    openPopup("빌드 정보를 등록하시겠습니까?");
-  }
+  openPopup(message);
 }
 
 async function doRegister() {
@@ -849,6 +832,7 @@ async function reloadAll() {
     loadStream("StageTW",      "stage"),
     loadStream("L10NTW",       "l10n"),
   ]);
+  await loadLatestVersionCodeGlobal();
 }
 
 /* 초기 진입 */
