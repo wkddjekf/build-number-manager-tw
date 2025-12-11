@@ -242,26 +242,25 @@
       <!-- 등록 -->
       <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
         <div class="mb-4">
-          <h2 class="text-xl font-semibold mr-4">빌드 정보 등록</h2>
-          <div class="mt-1 space-y-1 text-sm font-bold text-black">
-            <div>
-              LiveTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-livetw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-livetw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-livetw-ios">000</span></span>
-            </div>
-            <div>
-              StageTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-stagetw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-stagetw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-stagetw-ios">000</span></span>
-            </div>
-            <div>
-              L10NTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-l10ntw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-l10ntw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-l10ntw-ios">000</span></span>
-            </div>
+          <h2 class="text-xl font-semibold mb-2">빌드 정보 등록</h2>
+
+          <div class="text-sm font-bold text-black">
+            LiveTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-live-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-live-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-live-ios">-</span></span>
+          </div>
+          <div class="text-sm font-bold text-black">
+            StageTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-stage-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-stage-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-stage-ios">-</span></span>
+          </div>
+          <div class="text-sm font-bold text-black">
+            L10NTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-l10n-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-l10n-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-l10n-ios">-</span></span>
           </div>
         </div>
 
@@ -334,55 +333,81 @@
     <section id="page-stage" class="page-section hidden">
       <h1 class="text-3xl font-bold mb-6">StageTW Stream - Build History</h1>
 
-      <!-- 최신 -->
-      <div class="bg-yellow-100 p-6 rounded-xl shadow-md max-w-2xl mb-8">
-        <h2 class="text-xl font-semibold mb-4">최신 빌드 정보</h2>
-        <p><b>Stream:</b> StageTW</p>
-        <p><b>Build:</b> <span id="stage-latest-build">-</span></p>
-        <p><b>BuildType:</b> <span id="stage-latest-buildtype">-</span></p>
-        <p>
-          <b>Version:</b>
-          <span id="stage-latest-version" class="text-red-600 font-bold">-</span>
-        </p>
-        <p>
-          <b>AOS:</b>
-          <span id="stage-latest-aos" class="text-blue-600 font-bold">-</span>
-        </p>
-        <p>
-          <b>iOS:</b>
-          <span id="stage-latest-ios" class="text-blue-600 font-bold">-</span>
-        </p>
-        <p>
-          <b>cv:</b>
-          <span id="stage-latest-cv" class="text-red-600 font-bold">-</span>
-        </p>
-        <p><b>Date:</b> <span id="stage-latest-date">-</span></p>
-        <p><b>타겟 업데이트 일자:</b> <span id="stage-latest-target">-</span></p>
+      <!-- 최신 클라이언트 빌드: StageTW / LiveTW -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8 max-w-5xl">
+        <div class="bg-yellow-100 p-6 rounded-xl shadow-md">
+          <h2 class="text-xl font-semibold mb-4">StageTW 최신 클라이언트 빌드 정보</h2>
+          <p><b>Stream:</b> <span id="stage-client-stage-stream">-</span></p>
+          <p><b>Build:</b> <span id="stage-client-stage-build">-</span></p>
+          <p><b>BuildType:</b> <span id="stage-client-stage-buildtype">-</span></p>
+          <p>
+            <b>Version:</b>
+            <span id="stage-client-stage-version" class="text-red-600 font-bold">-</span>
+          </p>
+          <p>
+            <b>AOS:</b>
+            <span id="stage-client-stage-aos" class="text-blue-600 font-bold">-</span>
+          </p>
+          <p>
+            <b>iOS:</b>
+            <span id="stage-client-stage-ios" class="text-blue-600 font-bold">-</span>
+          </p>
+          <p>
+            <b>cv:</b>
+            <span id="stage-client-stage-cv" class="text-red-600 font-bold">-</span>
+          </p>
+          <p><b>Date:</b> <span id="stage-client-stage-date">-</span></p>
+          <p><b>타겟 업데이트 일자:</b> <span id="stage-client-stage-target">-</span></p>
+        </div>
+
+        <div class="bg-yellow-100 p-6 rounded-xl shadow-md">
+          <h2 class="text-xl font-semibold mb-4">LiveTW 최신 클라이언트 빌드 정보</h2>
+          <p><b>Stream:</b> <span id="stage-client-live-stream">-</span></p>
+          <p><b>Build:</b> <span id="stage-client-live-build">-</span></p>
+          <p><b>BuildType:</b> <span id="stage-client-live-buildtype">-</span></p>
+          <p>
+            <b>Version:</b>
+            <span id="stage-client-live-version" class="text-red-600 font-bold">-</span>
+          </p>
+          <p>
+            <b>AOS:</b>
+            <span id="stage-client-live-aos" class="text-blue-600 font-bold">-</span>
+          </p>
+          <p>
+            <b>iOS:</b>
+            <span id="stage-client-live-ios" class="text-blue-600 font-bold">-</span>
+          </p>
+          <p>
+            <b>cv:</b>
+            <span id="stage-client-live-cv" class="text-red-600 font-bold">-</span>
+          </p>
+          <p><b>Date:</b> <span id="stage-client-live-date">-</span></p>
+          <p><b>타겟 업데이트 일자:</b> <span id="stage-client-live-target">-</span></p>
+        </div>
       </div>
 
       <!-- 등록 -->
       <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
         <div class="mb-4">
-          <h2 class="text-xl font-semibold mr-4">빌드 정보 등록</h2>
-          <div class="mt-1 space-y-1 text-sm font-bold text-black">
-            <div>
-              LiveTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-livetw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-livetw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-livetw-ios">000</span></span>
-            </div>
-            <div>
-              StageTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-stagetw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-stagetw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-stagetw-ios">000</span></span>
-            </div>
-            <div>
-              L10NTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-l10ntw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-l10ntw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-l10ntw-ios">000</span></span>
-            </div>
+          <h2 class="text-xl font-semibold mb-2">빌드 정보 등록</h2>
+
+          <div class="text-sm font-bold text-black">
+            LiveTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-live-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-live-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-live-ios">-</span></span>
+          </div>
+          <div class="text-sm font-bold text-black">
+            StageTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-stage-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-stage-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-stage-ios">-</span></span>
+          </div>
+          <div class="text-sm font-bold text-black">
+            L10NTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-l10n-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-l10n-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-l10n-ios">-</span></span>
           </div>
         </div>
 
@@ -484,26 +509,25 @@
       <!-- 등록 (Build 고정: L10NTW) -->
       <div class="bg-white p-6 rounded-xl shadow-md max-w-4xl mb-10">
         <div class="mb-4">
-          <h2 class="text-xl font-semibold mr-4">빌드 정보 등록</h2>
-          <div class="mt-1 space-y-1 text-sm font-bold text-black">
-            <div>
-              LiveTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-livetw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-livetw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-livetw-ios">000</span></span>
-            </div>
-            <div>
-              StageTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-stagetw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-stagetw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-stagetw-ios">000</span></span>
-            </div>
-            <div>
-              L10NTW Latest <span class="underline">Version</span>:
-              <span class="ml-1 text-red-600 font-bold latest-l10ntw-version">-</span>
-              <span class="ml-3">AOS: <span class="latest-l10ntw-aos">000</span></span>
-              <span class="ml-3">iOS: <span class="latest-l10ntw-ios">000</span></span>
-            </div>
+          <h2 class="text-xl font-semibold mb-2">빌드 정보 등록</h2>
+
+          <div class="text-sm font-bold text-black">
+            LiveTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-live-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-live-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-live-ios">-</span></span>
+          </div>
+          <div class="text-sm font-bold text-black">
+            StageTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-stage-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-stage-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-stage-ios">-</span></span>
+          </div>
+          <div class="text-sm font-bold text-black">
+            L10NTW Latest <span class="underline">Version</span>:
+            <span class="ml-1 text-red-600 font-bold summary-l10n-version">-</span>
+            <span class="ml-4 text-blue-700 font-bold">AOS: <span class="summary-l10n-aos">-</span></span>
+            <span class="ml-4 text-blue-700 font-bold">iOS: <span class="summary-l10n-ios">-</span></span>
           </div>
         </div>
 
@@ -667,6 +691,9 @@ async function loadStream(streamName, key) {
 }
 
 function setStreamLatest(key, data) {
+  const buildEl = document.getElementById(`${key}-latest-build`);
+  if (!buildEl) return;  // Stage 페이지에서 새 카드만 쓰는 경우 대비
+
   document.getElementById(`${key}-latest-build`).innerText     = data?.build ?? "-";
   document.getElementById(`${key}-latest-buildtype`).innerText = data?.build_type ?? "-";
   document.getElementById(`${key}-latest-version`).innerText   = data?.version ?? "-";
@@ -702,25 +729,55 @@ function renderHistory(tbodyId, list) {
   });
 }
 
-/* ───────── Build별 Latest Version/AOS/IOS 표시 ───────── */
-async function loadLatestVersionInfoPerBuild() {
-  const liveBuild  = await api("/latest/build/LiveTW");
-  const stageBuild = await api("/latest/build/StageTW");
-  const l10nBuild  = await api("/latest/build/L10NTW");
+/* ───────── Stage 페이지용 최신 클라이언트 카드 ───────── */
+async function loadStageClientCards() {
+  const [stageClient, liveClient] = await Promise.all([
+    api("/latest/build/StageTW"),
+    api("/latest/build/LiveTW"),
+  ]);
 
-  setLatestVersionLine("livetw",  liveBuild);
-  setLatestVersionLine("stagetw", stageBuild);
-  setLatestVersionLine("l10ntw",  l10nBuild);
+  setClientCard("stage-client-stage", stageClient);
+  setClientCard("stage-client-live",  liveClient);
 }
 
-function setLatestVersionLine(key, data) {
-  const verText = data?.version ?? "-";
-  const aosText = data?.aos_version ?? "000";
-  const iosText = data?.ios_version ?? "000";
+function setClientCard(prefix, data) {
+  const set = (suffix, value) => {
+    const el = document.getElementById(`${prefix}-${suffix}`);
+    if (el) el.innerText = value ?? "-";
+  };
 
-  document.querySelectorAll(`.latest-${key}-version`).forEach(el => el.innerText = verText);
-  document.querySelectorAll(`.latest-${key}-aos`).forEach(el => el.innerText = aosText);
-  document.querySelectorAll(`.latest-${key}-ios`).forEach(el => el.innerText = iosText);
+  set("stream",  data?.stream);
+  set("build",   data?.build);
+  set("buildtype", data?.build_type);
+  set("version", data?.version);
+  set("aos",     data?.aos_version);
+  set("ios",     data?.ios_version);
+  set("cv",      data?.cv);
+  set("date",    onlyDate(data?.created_at));
+  set("target",  onlyDate(data?.target_update_date));
+}
+
+/* ───────── 최신 Version/AOS/iOS 요약 (Live/Stage/L10N) ───────── */
+async function loadLatestVersionSummary() {
+  const [live, stage, l10n] = await Promise.all([
+    api("/latest/build/LiveTW"),
+    api("/latest/build/StageTW"),
+    api("/latest/build/L10NTW"),
+  ]);
+
+  applyVersionSummary("live", live);
+  applyVersionSummary("stage", stage);
+  applyVersionSummary("l10n", l10n);
+}
+
+function applyVersionSummary(key, data) {
+  const version = data?.version ?? "-";
+  const aos     = data?.aos_version ?? "-";
+  const ios     = data?.ios_version ?? "-";
+
+  document.querySelectorAll(`.summary-${key}-version`).forEach(el => el.innerText = version);
+  document.querySelectorAll(`.summary-${key}-aos`).forEach(el => el.innerText = aos);
+  document.querySelectorAll(`.summary-${key}-ios`).forEach(el => el.innerText = ios);
 }
 
 /* ───────── 등록 로직 ───────── */
@@ -879,7 +936,10 @@ async function reloadAll() {
     loadStream("StageTW",      "stage"),
     loadStream("L10NTW",       "l10n"),
   ]);
-  await loadLatestVersionInfoPerBuild();
+  await Promise.all([
+    loadStageClientCards(),
+    loadLatestVersionSummary(),
+  ]);
 }
 
 /* 초기 진입 */
