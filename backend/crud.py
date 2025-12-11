@@ -29,28 +29,48 @@ def get_history_by_stream(
     db: Session,
     stream: str,
     limit: int = 20,
+    offset: int = 0,
 ) -> List[models.BuildRecord]:
-    return (
+    """
+    특정 Stream의 히스토리를 최신순으로 가져온다.
+    - limit : 한 번에 가져올 최대 개수
+    - offset: 건너뛸 개수 (페이징용)
+    """
+    query = (
         db.query(models.BuildRecord)
         .filter(models.BuildRecord.stream == stream)
         .order_by(desc(models.BuildRecord.created_at))
-        .limit(limit)
-        .all()
     )
+
+    if offset:
+        query = query.offset(offset)
+    if limit:
+        query = query.limit(limit)
+
+    return query.all()
 
 
 def get_history_by_build(
     db: Session,
     build: str,
     limit: int = 20,
+    offset: int = 0,
 ) -> List[models.BuildRecord]:
-    return (
+    """
+    특정 Build(LiveTW, StageTW 등)의 히스토리를 최신순으로 가져온다.
+    """
+    query = (
         db.query(models.BuildRecord)
         .filter(models.BuildRecord.build == build)
         .order_by(desc(models.BuildRecord.created_at))
-        .limit(limit)
-        .all()
     )
+
+    if offset:
+        query = query.offset(offset)
+    if limit:
+        query = query.limit(limit)
+
+    return query.all()
 
 
 def create_build(
