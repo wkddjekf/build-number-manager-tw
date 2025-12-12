@@ -537,7 +537,7 @@
             <input class="p-2 border rounded w-full text-sm bg-gray-100" value="L10NTW" disabled />
           </div>
           <div>
-            <label class="font-semibold text-sm">BuildType</label>
+            <label class="font-semibold text.sm">BuildType</label>
             <select id="l10n-input-buildtype" class="p-2 border rounded w-full text-sm">
               <option value="Full Build">Full Build</option>
               <option value="DataOnly">DataOnly</option>
@@ -692,7 +692,7 @@ async function loadStream(streamName, key) {
 
 function setStreamLatest(key, data) {
   const buildEl = document.getElementById(`${key}-latest-build`);
-  if (!buildEl) return;  // Stage 페이지에서 새 카드만 쓰는 경우 대비
+  if (!buildEl) return;
 
   document.getElementById(`${key}-latest-build`).innerText     = data?.build ?? "-";
   document.getElementById(`${key}-latest-buildtype`).innerText = data?.build_type ?? "-";
@@ -798,7 +798,7 @@ function compareVersion(v1, v2) {
 }
 
 function toIntOrNull(str) {
-  if (!str && str !== 0) return null;
+  if (str === null || str === undefined || str === "") return null;
   const n = parseInt(str, 10);
   return Number.isNaN(n) ? null : n;
 }
@@ -830,42 +830,78 @@ async function attemptRegisterStream(streamName, key, isL10n=false) {
   }
 
   const history = await api(`/history/stream/${streamName}`) || [];
-  const latest = history[0];
 
-  // 같은 Build 기준 최신 기록 찾기
-  const latestSameBuild = history.find(h => h.build === input.build);
+  const historySameBuild = history.filter(h => h.build === input.build);
+  const latestOverall    = history[0] || null;
+  const latestSameBuild  = historySameBuild[0] || null;
 
-  let vCmp = 0;
-  let aosLower = false;
-  let iosLower = false;
-  let aosSame = false;
-  let iosSame = false;
+  const newAos = toIntOrNull(input.aos);
+  const newIos = toIntOrNull(input.ios);
 
-  if (latestSameBuild) {
-    vCmp = compareVersion(input.version, latestSameBuild.version || "");
+  /* 1) 같은 Build + Version 이 이미 있고, 그 기록에 모바일 버전코드가 있으면
+        → AOS/iOS 값이 조금이라도 다르면 등록 불가 */
+  const existingSameVersion = historySameBuild.find(
+    h => h.version === input.version
+  );
 
-    const newAos = toIntOrNull(input.aos);
-    const oldAos = toIntOrNull(latestSameBuild.aos_version);
-    const newIos = toIntOrNull(input.ios);
-    const oldIos = toIntOrNull(latestSameBuild.ios_version);
+  if (existingSameVersion) {
+    const oldAos = toIntOrNull(existingSameVersion.aos_version);
+    const oldIos = toIntOrNull(existingSameVersion.ios_version);
+    const hasOldMobile = (oldAos !== null) || (oldIos !== null);
 
-    if (newAos !== null && oldAos !== null) {
-      aosLower = newAos < oldAos;
-      aosSame  = newAos === oldAos;
-    }
-    if (newIos !== null && oldIos !== null) {
-      iosLower = newIos < oldIos;
-      iosSame  = newIos === oldIos;
-    }
+    if (hasOldMobile) {
+      const aosMismatch = (oldAos !== null && newAos !== null && oldAos !== newAos) ||
+                          (oldAos !== null && newAos === null);
+      const iosMismatch = (oldIos !== null && newIos !== null && oldIos !== newIos) ||
+                          (oldIos !== null && newIos === null);
 
-    // 1) 버전이 같거나 더 큰데 모바일 버전코드가 더 낮으면 → 무조건 막음
-    if ((vCmp === 0 || vCmp > 0) && (aosLower || iosLower)) {
-      alert("모바일 버전코드를 잘못 입력하였습니다. 다시 확인 부탁드립니다.");
-      return;
+      if (aosMismatch || iosMismatch) {
+        alert("모바일 버전코드를 잘못 입력하였습니다. 다시 확인 부탁드립니다.");
+        return;
+      }
     }
   }
 
-  // 기존 duplicate / cv 검사
+  /* 2) 같은 Build 전체 기준으로
+        → 새 AOS/iOS가 이미 등록된 최대값보다 작으면 등록 불가
+        (단, 버전이 더 크고 '직전 기록과 동일한 값'인 경우는 예외로 팝업 경고 후 등록 가능) */
+  let maxAos = null;
+  let maxIos = null;
+  historySameBuild.forEach(h => {
+    const a = toIntOrNull(h.aos_version);
+    const i = toIntOrNull(h.ios_version);
+    if (a !== null) maxAos = (maxAos === null ? a : Math.max(maxAos, a));
+    if (i !== null) maxIos = (maxIos === null ? i : Math.max(maxIos, i));
+  });
+
+  const isLowerThanMax =
+    (newAos !== null && maxAos !== null && newAos < maxAos) ||
+    (newIos !== null && maxIos !== null && newIos < maxIos);
+
+  if (isLowerThanMax) {
+    alert("모바일 버전코드를 잘못 입력하였습니다. 다시 확인 부탁드립니다.");
+    return;
+  }
+
+  // 버전-비교 (같은 Build 내에서)
+  let warnSameCodeHigherVersion = false;
+  if (latestSameBuild) {
+    const vCmp = compareVersion(input.version, latestSameBuild.version || "");
+    if (vCmp > 0) {
+      const latestAos = toIntOrNull(latestSameBuild.aos_version);
+      const latestIos = toIntOrNull(latestSameBuild.ios_version);
+
+      const sameAos = (newAos !== null && latestAos !== null && newAos === latestAos);
+      const sameIos = (newIos !== null && latestIos !== null && newIos === latestIos);
+
+      if (sameAos || sameIos) {
+        // 버전은 더 큰데 모바일 버전코드는 직전과 동일한 경우
+        warnSameCodeHigherVersion = true;
+      }
+    }
+  }
+
+  /* 기존 duplicate / CV 변경 체크 */
   const duplicated = history.some(h =>
     h.build === input.build &&
     h.build_type === "Full Build" &&
@@ -876,12 +912,15 @@ async function attemptRegisterStream(streamName, key, isL10n=false) {
   );
 
   let diffCv = false;
-  if (latest && latest.cv && input.cv && latest.cv !== input.cv) {
+  if (latestOverall && latestOverall.cv && input.cv && latestOverall.cv !== input.cv) {
     diffCv = true;
   }
 
   let message = "";
-  if (duplicated && diffCv) {
+
+  if (warnSameCodeHigherVersion) {
+    message = "버전코드가 이전에 등록했던 값과 동일합니다.<br>그래도 등록하시겠습니까?";
+  } else if (duplicated && diffCv) {
     message = "같은 Stream/Build의 Full Build 기록이 이미 있습니다.<br>또한 CV 정보가 직전 빌드와 다릅니다.<br>등록하시겠습니까?";
   } else if (duplicated) {
     message = "같은 Stream/Build의 Full Build 기록이 이미 있습니다.<br>정말 등록하시겠습니까?";
@@ -889,11 +928,6 @@ async function attemptRegisterStream(streamName, key, isL10n=false) {
     message = "CV 정보가 직전 빌드와 다릅니다.<br>등록하시겠습니까?";
   } else {
     message = "빌드 정보를 등록하시겠습니까?";
-  }
-
-  // 2) 버전이 더 큰데 모바일 버전코드가 이전과 동일한 경우 → 경고 팝업 (등록/취소 선택)
-  if (latestSameBuild && vCmp > 0 && (aosSame || iosSame)) {
-    message = "버전코드가 이전에 등록했던 값과 동일합니다.<br>그래도 등록하시겠습니까?";
   }
 
   pendingRegister = {
